@@ -71,8 +71,8 @@ setmarksupdate=()=>
     <button onClick={this.setviewupdate}>update info</button>
     <li>Final term marks</li>
   <li>Supervisor:{object.final_supervisor}</li>
-    <li>External:100</li>
-    <li>Committee100</li>
+    <li>External:{object.final_external}</li>
+  <li>Committee:{object.final_committee}</li>
     <button onClick={this.setmarksupdate}>update marks</button>
     <div>
                 {this.state.checkState==="viewupdate" && <Updateview obj={object.roll}/>}

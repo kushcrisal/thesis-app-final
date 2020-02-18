@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import {useHistory} from 'react-router-dom'
 import './finalsupervisor.css'
 
 export class finalsupervisor extends Component {
@@ -49,7 +50,7 @@ export class finalsupervisor extends Component {
             
         }
         
-        this.calculate()
+       
      };
      calculate=()=>
      {
@@ -81,6 +82,12 @@ export class finalsupervisor extends Component {
        
         this.refresh()
         
+     }
+     cancelhandel=()=>
+     {
+         const history=useHistory()
+         history.goBack()
+
      }
      
 
@@ -172,9 +179,11 @@ export class finalsupervisor extends Component {
                             </tr>
                             </tbody>
                         </table>
-                        <button onClick={this.upload} class="btn btn-dark">Submit</button>
                         <div>
-                        <button onClick={this.refresh} class="btn btn-dark">Marks Input completion</button>
+                        <button onClick={ this.calculate} class="btn btn-dark">Cancel</button>
+                        <button onClick={this.upload} class="btn btn-dark">Submit</button><p>         </p>
+                        
+                       
                         </div>
                         </div>
             </div>

@@ -11,19 +11,24 @@ export class finalsupervisor extends Component {
         effort:0,
         organization:0,
         timely:0,
+        mark:0,
         
         com_name:[],
         name:'',
         membershow:false,
+        total:[],
 
         nametot:{nam:'',tot:0},
         temp:{nam:'',tot:0},
+        show_upload:false,
         
-        sec:'final_supervisor'
+        sec:'final_committee'
         
         
     
-    }
+        }
+        
+    
     
     }
     
@@ -37,6 +42,7 @@ export class finalsupervisor extends Component {
         switch(type)
         {
             case "regularity":
+                
                 this.setState({regularity:input})
                 break;
              case "understanding":
@@ -60,21 +66,27 @@ export class finalsupervisor extends Component {
         
         
      };
-     calculate=(object,index)=>
+     calculate=()=>
      {
          
          let temp=this.state.temp1;
-         let f;
+         let f=this.state.mark;
         let a=parseInt(this.state.regularity)
         let b=parseInt(this.state.timely)
         let c=parseInt(this.state.understanding)
         let d=parseInt(this.state.effort)
         let e=parseInt(this.state.organization)
         f=a+b+c+d+e;
-       object=f
+        let prev= this.state.total
+        let temp1=this.state.mark
+        temp1=f
+        prev.push(temp1)
+        this.setState({total:prev})
+        this.setState({show_upload:true})
+       
         
-       console.log(object)
-       return f;
+       
+       
 
         
        
@@ -91,10 +103,18 @@ export class finalsupervisor extends Component {
   }
      upload=()=>
      {
+         let grand=0
+         let i=0
+         let length=this.state.total.length
+         for(i;i<length;i++)
+         {
+             grand=grand+this.state.total[i]
+         }
+         grand=grand/length
         
 
          axios.post('http://localhost:80/thesis/update.php/',{
-            roll:this.props.roll,quantity:this.state.total,
+            roll:this.props.roll,quantity:grand,
             marks:this.state.sec
             
         })
@@ -135,9 +155,10 @@ export class finalsupervisor extends Component {
      {
          return this.state.com_name.map((object,index)=>
          <div >
+             
                 <div >
                  <h2>
-                            {object.name}
+                            {object.nam}
                     </h2>
                     
                         <table align="center" className="table table-hover table-dark">
@@ -156,8 +177,10 @@ export class finalsupervisor extends Component {
                                 <input
                                 placeholder="marks"
                                 //value={this.state.regularity}
-                                onChange={evt => this.handleInput(evt, "regularity")}
+                                onChange={evt => this.handleInput(evt, "regularity",index)}
+
                                 />
+                                
                                 </td>
                             
                             
@@ -212,14 +235,18 @@ export class finalsupervisor extends Component {
                             <tr>
                                 <td>total </td> 
                                 <td></td>
+                                
                                 <td>
                                     
-                                    {this.calculate(object.tot,index)}
+                                { this.state.total[index] !== null &&  this.state.total[index]
+                                }
+                                   
                                </td>
                             </tr>
                             </tbody>
                         </table>
-                        <button onClick={this.calculate(object.tot,index)} class="btn btn-dark">Submit</button>
+                        
+                        <button onClick={this.calculate}   class="btn btn-dark">Submit</button>
                         
                         </div>
             </div>
@@ -236,6 +263,7 @@ membershowchange=()=>
     {
         this.setState({membershow:true})
     }
+   
 
     render() {
         return (
@@ -243,6 +271,9 @@ membershowchange=()=>
             <input type="submit" onClick={this.takename} value="Add"/>
             <button onClick={this.membershowchange}>Done</button>
             {this.state.membershow && this.state.com_name !==null && this.member()}
+
+
+            {this.state.show_upload===true  &&  <div><input type="submit" value="upload" onClick={this.upload}></input></div>} 
            
                 </div>
            

@@ -18,6 +18,12 @@ if($result=mysqli_query($conn,$query))
     $students[$count]['name']=$row['name'];
   $students[$count]['roll']=$row['roll'];
     $students[$count]['final_supervisor']=$row['final_supervisor'];
+      $students[$count]['final_committee']=$row['final_committee'];
+        $students[$count]['final_external']=$row['final_external'];
+        $students[$count]['mid_supervisor']=$row['mid_supervisor'];
+          $students[$count]['mid_committee']=$row['mid_committee'];
+            $students[$count]['mid_external']=$row['mid_external'];
+
     $count++;
   }
   echo json_encode($students);
