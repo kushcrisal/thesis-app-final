@@ -7,7 +7,7 @@ install axios, bootstrap ,react-router-dom
 add extension moseif cors on chrome 
 
 
-move thesis folder to xampp/htdocs
+move thesis folder (inside of backend) to xampp/htdocs ///not backend folder
 
 
 
